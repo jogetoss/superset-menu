@@ -1,6 +1,6 @@
 # Description
 
-This repository is meant to serve as a general template for how to set up new repositories in the JogetOSS organization. 
+The **Apache Superset Userview Menu** plugin allows user to integrate Apache Superset Dashboards into Joget DX. User can choose to embed their public or protected dashboard(s). It allows user to configure the dashboard embed options.
 
 # Getting Help
 
