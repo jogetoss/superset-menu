@@ -14,7 +14,7 @@ public class Activator implements BundleActivator {
         registrationList = new ArrayList<ServiceRegistration>();
 
         //Register plugin here
-        registrationList.add(context.registerService(EmbedApacheSuperset.class.getName(), new EmbedApacheSuperset(), null));
+        registrationList.add(context.registerService(SupersetMenu.class.getName(), new SupersetMenu(), null));
     }
 
     public void stop(BundleContext context) {

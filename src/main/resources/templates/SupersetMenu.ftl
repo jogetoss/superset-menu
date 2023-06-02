@@ -1,4 +1,5 @@
 <script src="https://unpkg.com/@superset-ui/embedded-sdk"></script>
+
 <fieldset id="form-canvas">
     <div class="form-section">
         <div class="form-section-title"><span>${element.properties.label}</span></div>
@@ -7,7 +8,7 @@
             <style>
                 .right-button-panel { display: none; }
             </style>
-            <iframe src="${element.properties.dashboardUrl}?standalone=true" id="public-ss-dashboard" style="width:100% !important; height:100vh !important; border: 1px solid !important; margin: 10px !important;"></iframe>
+            <iframe src="${element.properties.dashboardUrl}?standalone=true" id="public-ss-dashboard" style="width:98% !important; height:100vh !important; border: 1px solid !important; margin: 10px !important;"></iframe>
         </#if>
         <#if (element.properties.dashboardType! == 'protected') >
             <div>
@@ -17,12 +18,7 @@
     </div>
 </fieldset>
 
-<script>
-    //iFrameResize({ log: true }, '#public-ss-dashboard');
-    $('#public-ss-dashboard').iFrameResize();
-</script>
-
-<script>
+<script>    
     $(document).ready(function(){
         <#if (element.properties.dashboardType! == 'protected') >
             const myDashboard = supersetEmbeddedSdk.embedDashboard({

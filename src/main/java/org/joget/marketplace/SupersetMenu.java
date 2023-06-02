@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.joget.apps.app.service.AppPluginUtil;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.userview.model.UserviewMenu;
 import org.joget.commons.util.LogUtil;
@@ -30,10 +33,65 @@ import org.joget.plugin.base.PluginManager;
 import org.joget.plugin.base.PluginWebSupport;
 import org.json.JSONObject;
 
-public class EmbedApacheSuperset extends UserviewMenu implements PluginWebSupport {
-
+public class SupersetMenu extends UserviewMenu implements PluginWebSupport {
+    private final static String MESSAGE_PATH = "messages/SupersetMenu";
+ 
     private static final String DASHBOARD_PUBLIC = "public";
     private static final String DASHBOARD_PROTECTED = "protected";
+
+
+    public String getName() {
+        return AppPluginUtil.getMessage("userview.superset.name", getClassName(), MESSAGE_PATH);
+    }
+
+    public String getVersion() {
+        final Properties projectProp = new Properties();
+        try {
+            projectProp.load(this.getClass().getClassLoader().getResourceAsStream("project.properties"));
+        } catch (IOException ex) {
+            LogUtil.error(getClass().getName(), ex, "Unable to get project version from project properties...");
+        }
+        return projectProp.getProperty("version");
+    }
+    
+    public String getClassName() {
+        return getClass().getName();
+    }
+
+    public String getLabel() {
+        //support i18n
+        return AppPluginUtil.getMessage("org.joget.marketplace.superset.pluginLabel", getClassName(), MESSAGE_PATH);
+    }
+
+    public String getDescription() {
+        //support i18n
+        return AppPluginUtil.getMessage("org.joget.marketplace.superset.pluginDesc", getClassName(), MESSAGE_PATH);
+    }
+
+    @Override
+    public String getPropertyOptions() {
+        return AppUtil.readPluginResource(getClass().getName(), "/properties/SupersetMenu.json", null, true, MESSAGE_PATH);
+    }
+
+    @Override
+    public String getCategory() {
+        return "Marketplace";
+    }
+
+    @Override
+    public String getIcon() {
+        return "<i class=\"fas fa-chart-bar\"></i>";
+    }
+
+    @Override
+    public boolean isHomePageSupported() {
+        return true;
+    }
+
+    @Override
+    public String getDecoratedMenu() {
+        return null;
+    }
 
     @Override
     public String getRenderPage() {
@@ -62,7 +120,7 @@ public class EmbedApacheSuperset extends UserviewMenu implements PluginWebSuppor
 
         setProperty("dashboardType", dashboardType);
         PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean("pluginManager");
-        String content = pluginManager.getPluginFreeMarkerTemplate(freeMarkerModel, getClass().getName(), "/templates/supersetEmbed.ftl", null);
+        String content = pluginManager.getPluginFreeMarkerTemplate(freeMarkerModel, getClass().getName(), "/templates/SupersetMenu.ftl", null);
         return content;
     }
 
@@ -116,7 +174,7 @@ public class EmbedApacheSuperset extends UserviewMenu implements PluginWebSuppor
             apiResponse.setResponseCode(response.getStatusLine().getStatusCode());
             apiResponse.setResponseBody(EntityUtils.toString(response.getEntity()));
         } catch (IOException ex) {
-            LogUtil.error(EmbedApacheSuperset.class.getName(), ex, ex.getMessage());
+            LogUtil.error(SupersetMenu.class.getName(), ex, ex.getMessage());
         }
         return apiResponse;
     }
@@ -156,9 +214,9 @@ public class EmbedApacheSuperset extends UserviewMenu implements PluginWebSuppor
             apiResponse.setResponseCode(response.getStatusLine().getStatusCode());
             apiResponse.setResponseBody(EntityUtils.toString(response.getEntity()));
         } catch (UnsupportedEncodingException ex) {
-            LogUtil.error(EmbedApacheSuperset.class.getName(), ex, ex.getMessage());
+            LogUtil.error(SupersetMenu.class.getName(), ex, ex.getMessage());
         } catch (IOException ex) {
-            LogUtil.error(EmbedApacheSuperset.class.getName(), ex, ex.getMessage());
+            LogUtil.error(SupersetMenu.class.getName(), ex, ex.getMessage());
         }
         return apiResponse;
     }
@@ -183,61 +241,11 @@ public class EmbedApacheSuperset extends UserviewMenu implements PluginWebSuppor
             apiResponse.setResponseCode(response.getStatusLine().getStatusCode());
             apiResponse.setResponseBody(EntityUtils.toString(response.getEntity()));
         } catch (UnsupportedEncodingException ex) {
-            LogUtil.error(EmbedApacheSuperset.class.getName(), ex, ex.getMessage());
+            LogUtil.error(SupersetMenu.class.getName(), ex, ex.getMessage());
         } catch (IOException ex) {
-            LogUtil.error(EmbedApacheSuperset.class.getName(), ex, ex.getMessage());
+            LogUtil.error(SupersetMenu.class.getName(), ex, ex.getMessage());
         }
         return apiResponse;
-    }
-
-    @Override
-    public String getCategory() {
-        return "Marketplace";
-    }
-
-    @Override
-    public String getIcon() {
-        return "<i class=\"fas fa-chart-bar\"></i>";
-    }
-
-    @Override
-    public boolean isHomePageSupported() {
-        return true;
-    }
-
-    @Override
-    public String getDecoratedMenu() {
-        return null;
-    }
-
-    @Override
-    public String getName() {
-        return "Superset";
-    }
-
-    @Override
-    public String getVersion() {
-        return "8.0.0";
-    }
-
-    @Override
-    public String getDescription() {
-        return "To embed Apache Superset Dashboard";
-    }
-
-    @Override
-    public String getLabel() {
-        return "Superset";
-    }
-
-    @Override
-    public String getClassName() {
-        return this.getClass().getName();
-    }
-
-    @Override
-    public String getPropertyOptions() {
-        return AppUtil.readPluginResource(getClass().getName(), "/properties/supersetEmbedder.json", null, true, "message/SupersetEmbedder");
     }
 
     @Override

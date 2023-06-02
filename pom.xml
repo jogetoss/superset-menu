@@ -2,12 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.joget.marketplace</groupId>
-    <artifactId>superset-embedder</artifactId>
+    <artifactId>superset-menu</artifactId>
     <packaging>bundle</packaging>
     <version>8.0.0</version>
-    <name>superset-embedder</name>
+    <name>superset-menu</name>
     <url>http://www.joget.org</url>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/resources-filtered</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
