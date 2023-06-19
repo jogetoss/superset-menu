@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -30,20 +27,21 @@ import org.joget.marketplace.model.Login;
 import org.joget.marketplace.model.Resource;
 import org.joget.marketplace.model.SupersetUser;
 import org.joget.plugin.base.PluginManager;
-import org.joget.plugin.base.PluginWebSupport;
 import org.json.JSONObject;
 
-public class SupersetMenu extends UserviewMenu implements PluginWebSupport {
+public class SupersetMenu extends UserviewMenu {
     private final static String MESSAGE_PATH = "messages/SupersetMenu";
  
     private static final String DASHBOARD_PUBLIC = "public";
     private static final String DASHBOARD_PROTECTED = "protected";
 
 
+    @Override
     public String getName() {
         return AppPluginUtil.getMessage("userview.superset.name", getClassName(), MESSAGE_PATH);
     }
 
+    @Override
     public String getVersion() {
         final Properties projectProp = new Properties();
         try {
@@ -54,15 +52,18 @@ public class SupersetMenu extends UserviewMenu implements PluginWebSupport {
         return projectProp.getProperty("version");
     }
     
+    @Override
     public String getClassName() {
         return getClass().getName();
     }
 
+    @Override
     public String getLabel() {
         //support i18n
         return AppPluginUtil.getMessage("org.joget.marketplace.superset.pluginLabel", getClassName(), MESSAGE_PATH);
     }
 
+    @Override
     public String getDescription() {
         //support i18n
         return AppPluginUtil.getMessage("org.joget.marketplace.superset.pluginDesc", getClassName(), MESSAGE_PATH);
@@ -146,7 +147,6 @@ public class SupersetMenu extends UserviewMenu implements PluginWebSupport {
                                     String guestTokenRes = gustTokenResponse.getResponseBody();
                                     JSONObject guestTokenResObject = new JSONObject(guestTokenRes);
                                     guestToken = (String) guestTokenResObject.get("token");
-                                    LogUtil.info(getClassName(), "guestToken: " + guestToken);
                                 } else {
                                     LogUtil.info(getClassName(), gustTokenResponse.getResponseBody());
                                 }
@@ -247,10 +247,4 @@ public class SupersetMenu extends UserviewMenu implements PluginWebSupport {
         }
         return apiResponse;
     }
-
-    @Override
-    public void webService(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // do nothing
-    }
-
 }
