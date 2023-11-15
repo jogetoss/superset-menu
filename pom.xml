@@ -4,7 +4,7 @@
     <groupId>org.joget.marketplace</groupId>
     <artifactId>superset-menu</artifactId>
     <packaging>bundle</packaging>
-    <version>8.0.0</version>
+    <version>8.0.1</version>
     <name>superset-menu</name>
     <url>http://www.joget.org</url>
     <build>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20230227</version>
+            <version>20231013</version>
         </dependency>
         
         <dependency>
