@@ -2,6 +2,9 @@
 
 The **Apache Superset Userview Menu** plugin allows user to integrate Apache Superset Dashboards into Joget DX. User can choose to embed their public or protected dashboard(s). It allows user to configure the dashboard embed options.
 
+To setup and configure this plugin, please see the [documentation](https://dev.joget.org/community/display/marketplace/Apache+Superset+Userview+Menu+Plugin).
+
+
 # Getting Help
 
 JogetOSS is a community-led team for open source software related to the [Joget](https://www.joget.org) no-code/low-code application platform.
